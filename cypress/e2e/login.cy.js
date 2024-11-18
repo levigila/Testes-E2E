@@ -1,4 +1,3 @@
-import { load } from 'signal-exit';
 import userData from '../fixtures/users/userData.json';
 
     const selectorsList = {
@@ -35,6 +34,13 @@ describe('Orange HRM Testing', () => {
     cy.location(selectorsList.urlField).should('equal', '/web/index.php/dashboard/index')
     cy.get(selectorsList.dashboardBackground)
   })
+  it('Login - Fail', () => {
+    cy.visit('auth/login')
+    cy.get(selectorsList.usernameField).type(userData.usernameFail)
+    cy.get(selectorsList.passwordField).type(userData.passwordFail)
+    cy.get(selectorsList.submitButton).click()
+    cy.get(selectorsList.errorAlert)
+  })
   it('User Info Updating - Success', () => {
      cy.visit('/auth/login')
      cy.get(selectorsList.usernameField).type(userData.usernameSuccess)
@@ -62,12 +68,5 @@ describe('Orange HRM Testing', () => {
      cy.get(selectorsList.maleGenderOption).click()
      cy.get(selectorsList.firstSaveButton).click()
      cy.get(selectorsList.successfullyAlertCloseButton) // Just to verify if the successfully alert shows up
-  })
-  it('Login - Fail', () => {
-    cy.visit('auth/login')
-    cy.get(selectorsList.usernameField).type(userData.usernameFail)
-    cy.get(selectorsList.passwordField).type(userData.passwordFail)
-    cy.get(selectorsList.submitButton).click()
-    cy.get(selectorsList.errorAlert)
   })
 })
